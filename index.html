@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.mobile-1.4.0-rc.1.js"></script>
+</head>
+<body>
+  <div data-role="page">
+
+    <div data-role="panel" id="panel" data-position="left" data-theme="a" data-display="push">
+      <div class="panel-head">
+        Какой Вы педагог?
+      </div>
+      <br>
+      <img src="./images/logo.png" id="panel-logo">
+      <br>
+      <a href="index.html" class="ui-btn">О симуляторе</a>
+      <a href="play.html" data-ajax="false" class="ui-btn">Играть</a>
+      <a href="https://mgpu.ru" class="ui-btn" rel="external" data-ajax="false">На сайт МГПУ</a>
+    </div>
+
+    <div data-role="header">
+      <a data-iconpos="notext" href="#panel" data-role="button" data-icon="flat-menu"></a>
+      <h1>О симуляторе</h1>
+      <!--<a data-iconpos="notext" data-role="button" data-icon="home" title="Home">Home</a>-->
+      
+    </div>
+
+    <div data-role="content" role="main">
+
+      <h1 style="margin-top: 0">Какой Вы учитель?</h1>
+
+      <img src="./images/hi.jpg" class="centered" width="100%">
+
+      <p>Планируете работать с детьми? Может быть вы уже воспитатель или учитель? Хотите узнать свои сильные и слабые стороны? </p>
+      <p>Решите всего 15 кейсов и исследуйте свои убеждения о детях, их эмоциональных и когнитивных возможностях, а также свой стиль общения с детьми в учебных и неучебных ситуациях. </p>
+      <p>Задания-кейсы моделируют типичные ситуации взаимодействия педагога с детьми. Выбирайте такие варианты ответов, которые схожи с тем, как поступили бы вы сами. Не пытайтесь угадать правильный ответ. Каждый из вариантов решения кейса имеет свои положительные и отрицательные стороны, отражая определенные личностные предпочтения педагога. Выбирайте то, что вам ближе и узнайте какой же вы педагог!</p>
+          
+      <script type="text/javascript" src="./js/dataset.js"></script>
+      <a href="play.html" data-ajax="false" class="ui-btn">Играть</a>
+
+    </div>
+  </div> 
+
+  <div id="highlight"> </div>
+</body>
+</html>

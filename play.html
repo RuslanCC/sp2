@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery.mobile-1.4.0-rc.1.js"></script>
+</head>
+<body>
+<div data-role="page">
+
+  <div data-role="panel" id="panel" data-position="left" data-theme="a" data-display="push">
+    <div class="panel-head">
+      Симулятор педагога
+    </div>
+    <br>
+    <img src="./images/logo.png" id="panel-logo">
+    <br>
+    <a href="index.html" class="ui-btn">О симуляторе</a>
+    <a href="play.html" data-ajax="false" class="ui-btn">Играть</a>
+    <a href="https://mgpu.ru" class="ui-btn" rel="external" data-ajax="false">На сайт МГПУ</a>
+  </div>
+
+  <div data-role="header">
+    <a data-iconpos="notext" href="#panel" data-role="button" data-icon="flat-menu"></a>
+    <h1>Какой Вы педагог?</h1>
+    <!--<a data-iconpos="notext" data-role="button" data-icon="home" title="Home">Home</a>-->
+
+  </div>
+
+  <div data-role="content" role="main">
+    <div class="smallbl">
+      <div data-role="rangeslider" id="rs1">
+        <input name="slider1" id="slider1" min="0" max="70" value="35" type="range" disabled="disabled" />
+        <input name="slider1r" id="slider1r" min="0" max="70" value="35" type="range" disabled="disabled" />
+      </div>
+      <center>Результат | Процесс</center>
+
+      <div data-role="rangeslider" id="rs2">
+        <input name="slider2" id="slider2" min="0" max="70" value="35" type="range" disabled="disabled" />
+        <input name="slider2r" id="slider2r" min="0" max="70" value="35" type="range" disabled="disabled" />
+      </div>
+      <center>Контроль | Открытость</center>
+
+      <div data-role="rangeslider" id="rs3">
+        <input name="slider3" id="slider3" min="0" max="58" value="29" type="range" disabled="disabled" />
+        <input name="slider3r" id="slider3r" min="0" max="58" value="29" type="range" disabled="disabled" />
+      </div>
+      <center>Эмоции | Мышление</center>
+
+      <div data-role="rangeslider" id="rs4">
+        <input name="slider4" id="slider4" min="0" max="66" value="33" type="range" disabled="disabled" />
+        <input name="slider4r" id="slider4r" min="0" max="66" value="33" type="range" disabled="disabled" />
+      </div>
+      <center>Монолог | Диалог</center>
+
+      <div data-role="rangeslider" id="rs5">
+        <input name="slider5" id="slider5" min="0" max="46" value="23" type="range" disabled="disabled" />
+        <input name="slider5r" id="slider5r" min="0" max="46" value="23" type="range" disabled="disabled" />
+      </div>
+      <center>Комфорт | Развитие</center>
+    </div>
+
+    <script type="text/javascript" src="./js/dataset.js"></script>
+    <script type="text/javascript">
+      $(document).ready(
+          function () {
+              var q = 1;
+              var p1 = 35;
+              var p2 = 35;
+              var p3 = 29;
+              var p4 = 33;
+              var p5 = 23;
+              var p1r = 35;
+              var p2r = 35;
+              var p3r = 29;
+              var p4r = 33;
+              var p5r = 23;
+              //console.log(dataset);
+              //$("#slider4").val(22).slider("refresh");
+              $("#q").html("Вопрос "+q+" из 15");
+              $("#question").html(dataset[q].q);
+              $("fieldset").html();
+
+              if (dataset[q].single){
+                  //single
+                  Object.keys(dataset[q].options).forEach(function(key) {
+                      //console.log(key, dataset[q].options[key]);
+                      $("fieldset").append('<input type="radio" name="' + q + '" id="id' + key + '" value="'+key+'"><label for="id' + key + '">' + dataset[q].options[key].name + '</label>');
+                  });
+              } else {
+                  // multiple
+                  Object.keys(dataset[q].options).forEach(function(key) {
+                      //console.log(key, dataset[q].options[key]);
+                      $("fieldset").append('<input type="checkbox" name="' + q + '" id="id' + key + '" value="'+key+'"><label for="id' + key + '">' + dataset[q].options[key].name + '</label>');
+                  });
+              }
+              try { $("[data-role=controlgroup]").enhanceWithin().controlgroup("refresh"); } catch (err) {}
+
+              $("#nextq").click(function () {
+                  next_q();
+              });
+
+              function next_q(){
+                  var vals = $("fieldset input");
+                  Object.keys(vals).forEach(function(key) {
+                      if (key != 'length' && key != 'prevObject' && key != 'context' && key != 'selector')
+                      //console.log("Вопрос - "+q+", вариант "+key+": "+vals[key].checked);
+                      if (vals[key].checked){
+                          //console.log(dataset[q].options[key].name);
+                          if (dataset[q].options[key].p1 >= 0){
+                              p1 = p1 + dataset[q].options[key].p1;
+                          } else { p1r = p1r + dataset[q].options[key].p1; }
+
+                          if (dataset[q].options[key].p2 >= 0){
+                              p2 = p2 + dataset[q].options[key].p2;
+                          } else { p2r = p2r + dataset[q].options[key].p2; }
+
+                          if (dataset[q].options[key].p3 >= 0){
+                              p3 = p3 + dataset[q].options[key].p3;
+                          } else { p3r = p3r + dataset[q].options[key].p3; }
+
+                          if (dataset[q].options[key].p4 >= 0){
+                              p4 = p4 + dataset[q].options[key].p4;
+                          } else { p4r = p4r + dataset[q].options[key].p4; }
+
+                          if (dataset[q].options[key].p5 >= 0){
+                              p5 = p5 + dataset[q].options[key].p5;
+                          } else { p5r = p5r + dataset[q].options[key].p5; }
+                      }
+                  });
+
+                  q++;
+
+                  if (q==16){ window.location.href = './results.html?p1='+p1+'&p2='+p2+'&p3='+p3+'&p4='+p4+'&p5='+p5+'&p1r='+p1r+'&p2r='+p2r+'&p3r='+p3r+'&p4r='+p4r+'&p5r='+p5r; return true; } else {
+
+                      $("#slider1").val(p1r);
+                      $("#slider2").val(p2r);
+                      $("#slider3").val(p3r);
+                      $("#slider4").val(p4r);
+                      $("#slider5").val(p5r);
+
+                      $("#slider1r").val(p1);
+                      $("#slider2r").val(p2);
+                      $("#slider3r").val(p3);
+                      $("#slider4r").val(p4);
+                      $("#slider5r").val(p5);
+
+                      $("#rs1").rangeslider('refresh');
+                      $("#rs2").rangeslider('refresh');
+                      $("#rs3").rangeslider('refresh');
+                      $("#rs4").rangeslider('refresh');
+                      $("#rs5").rangeslider('refresh');
+
+
+                      $("#q").html("Вопрос "+q+" из 15");
+                      $("#question").html(dataset[q].q);
+                      $("fieldset").html();
+
+                      $("[data-role=controlgroup]").enhanceWithin().empty();
+
+                      if (dataset[q].single){
+                          //single
+                          Object.keys(dataset[q].options).forEach(function(key) {
+                              //console.log(key, dataset[q].options[key]);
+                              $("fieldset").append('<input type="radio" name="' + q + '" id="id' + key + '" class="inp"><label for="id' + key + '">' + dataset[q].options[key].name + '</label>');
+                          });
+                      } else {
+                          // multiple
+                          Object.keys(dataset[q].options).forEach(function(key) {
+                              //console.log(key, dataset[q].options[key]);
+                              $("fieldset").append('<input type="checkbox" name="' + q + '" id="id' + key + '" class="inp"><label for="id' + key + '">' + dataset[q].options[key].name + '</label>');
+                          });
+                      }
+
+                      $("[data-role=controlgroup]").enhanceWithin().controlgroup("refresh");
+
+                      $("html, body").animate({ "scrollTop" : 0 }, 500);
+                  }
+              }
+          }
+      );
+    </script>
+
+    <h2 id="q"></h2>
+    <p id="question"></p>
+    <div data-role="fieldcontain"><form id="answers"><fieldset data-role="controlgroup"></fieldset></form></div>
+    <button id="nextq">Далее &raquo;</button>
+  </div>
+</div>
+
+<div id="highlight"> </div>
+</body>
+</html>
